@@ -4,7 +4,7 @@ const connStr =
 {
     host: 'localhost', // server name or IP address;
     port: 5432,
-    database: 'capacita-tech',
+    database: 'capacita_tech',
     user: 'postgres',
     password: 'Capacit@Tech2020'
 };

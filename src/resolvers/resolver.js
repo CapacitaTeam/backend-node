@@ -1,12 +1,14 @@
-import { psql } from '../psqlAdapter';
+import { queriesTypeCatalog } from '../queries/queriesTypeCatalog';
+import { queriesTypeUser } from '../queries/queriesTypeUser';
 
 // Debe coincidir con el type es el schema
 // Una función por cada endpoint
 export const resolvers = {
     Query: {
-        catalogues(_, args, ctx) {
-            const catalogos = 'select id, description from catalogue';
-            return psql.manyOrNone(catalogos);
-        }
+        // Catalogues
+        ...queriesTypeCatalog
+        ,
+        //Users
+        ...queriesTypeUser
     }
 };

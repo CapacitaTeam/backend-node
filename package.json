@@ -13,15 +13,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/polyfill": "7.10.4",
     "babel-node": "0.0.1-security",
     "body-parser": "1.19.0",
     "cors": "2.8.5",
     "express": "4.17.1",
     "express-graphql": "0.11.0",
     "graphql": "15.3.0",
-    "graphql-server-express": "1.4.1",
     "graphql-tools": "6.0.18",
-    "pg-promise": "10.5.8"
+    "pg-promise": "10.5.8",
+    "rimraf": "3.0.2"
   },
   "devDependencies": {
     "@babel/cli": "7.10.5",
