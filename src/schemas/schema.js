@@ -1,16 +1,21 @@
 import { makeExecutableSchema } from 'graphql-tools';
 import { resolvers } from '../resolvers/resolver';
-import { typeUser } from './typeUser';
-import { typeCatalog } from './typeCatalog';
+import { typeUser, queriesDefUser, mutationsDefUser } from './typeUser';
+import { typeCatalogue, queriesDefCatalogue } from './typeCatalogue';
+import { mutationsAuth } from './typeAuth';
 
 // Definición de type
 const typeDefs = `
   type Query {    
-    catalogues: [Catalogue]
-    users: [User]
+    ${queriesDefCatalogue}
+    ${queriesDefUser}
   }
-  ${ typeCatalog }  
-  ${ typeUser }
+  type Mutation {
+    ${mutationsDefUser}
+    ${mutationsAuth}
+  }
+  ${ typeCatalogue}  
+  ${ typeUser}
 `;
 
 export default makeExecutableSchema({
