@@ -36,6 +36,6 @@ app.use('/graphql', graphqlHTTP({
     schema: schema
 }));
 
-app.listen(3000, () => {
+app.listen(3001, () => {
     console.log('conectado');
 });

@@ -19,11 +19,19 @@ const authFunctions = {
 
                 return user;
             }
-            return null;
+            return {
+                username: username,
+                token: 'null',
+                error: e
+            };
         }
         catch (e) {
-            console.log(e)
-            return null;
+            const { username, password } = params;
+            return {
+                username: username,
+                token: 'null',
+                error: e
+            };
         }
 
     }
