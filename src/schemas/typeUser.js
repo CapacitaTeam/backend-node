@@ -1,5 +1,5 @@
 const typeUser = `type User {
-    id: Int!
+    id: Int
     firstname: String!
     lastname: String!    
     username: String!
@@ -13,7 +13,7 @@ const queriesDefUser = `
 
 const mutationsDefUser = `
   updateUser(id: Int!, firstname: String!, lastname: String!, username: String!, password: String!): User
-  createUser(id: Int!, firstname: String!, lastname: String!, username: String!, password: String!): User
+  createUser(id: Int, firstname: String!, lastname: String!, username: String!, password: String!): User
 `;
 
 module.exports = {

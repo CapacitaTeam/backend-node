@@ -1,7 +1,4 @@
 import { psql } from '../psqlAdapter';
-import jwt from 'jsonwebtoken';
-import { encryptPassword, comparePassword } from '../utilities/passwordHandler';
-import config from '../config';
 
 const userFunctions = {
 
@@ -11,17 +8,20 @@ const userFunctions = {
     },
     createUser: async (params) => {
         try {
-            const { id, username, firstname, lastname, password, token } = params;
-            
-            var password_formatted = await encryptPassword(password);            
-            psql.any(`INSERT INTO public.user (id, firstname, lastname, username, password) VALUES('${id}', '${firstname}', '${lastname}','${username}', '${password_formatted}')`)
-                .then((result) => {                    
+            const { username, firstname, lastname, password } = params;
+
+            const query_insert = `INSERT INTO public.user (firstname, lastname, username, password) VALUES('${firstname}', '${lastname}','${username}', crypt('${password}',gen_salt('bf')))`;
+            const resultado = await psql.any(query_insert)
+                .then((result) => {
+                    console.log(params);
                     return params;
                 })
                 .catch((err) => {
                     console.log(err)
                     return err;
                 });
+
+            return resultado;
         }
         catch (e) {
             console.log(e)
