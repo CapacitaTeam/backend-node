@@ -3,19 +3,26 @@ import { resolvers } from '../resolvers/resolver';
 import { typeUser, queriesDefUser, mutationsDefUser } from './typeUser';
 import { typeCatalogue, queriesDefCatalogue } from './typeCatalogue';
 import { mutationsAuth } from './typeAuth';
+import { typeQuestionQuiz, queriesDefQuestionQuiz } from './typeQuestionQuiz';
+import { typeAnswerQuiz, queriesDefAnswerQuiz } from './typeAnswerQuiz';
 
 // Definición de type
 const typeDefs = `
   type Query {    
     ${queriesDefCatalogue}
-    ${queriesDefUser}
+    ${queriesDefUser}    
+    ${queriesDefQuestionQuiz}
+    ${queriesDefAnswerQuiz}
   }
   type Mutation {
     ${mutationsDefUser}
     ${mutationsAuth}
   }
-  ${ typeCatalogue}  
-  ${ typeUser}
+
+  ${typeCatalogue}  
+  ${typeUser}
+  ${typeQuestionQuiz}
+  ${typeAnswerQuiz}
 `;
 
 export default makeExecutableSchema({

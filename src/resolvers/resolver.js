@@ -1,5 +1,7 @@
 import { queriesTypeCatalogue } from '../queries/queriesTypeCatalogue';
 import { queriesTypeUser } from '../queries/queriesTypeUser';
+import { queriesTypeQuestionQuiz } from '../queries/queriesTypeQuestionQuiz';
+import { queriesTypeAnswerQuiz } from '../queries/queriesTypeAnswerQuiz';
 import { mutationsTypeUser } from '../mutations/mutationsTypeUser';
 import { mutationsTypeAuth } from '../mutations/mutationsTypeAuth';
 
@@ -12,6 +14,12 @@ export const resolvers = {
         ,
         //Users
         ...queriesTypeUser
+        ,
+        //Preguntas Quiz
+        ...queriesTypeQuestionQuiz
+        ,
+        //Respuestas Quiz
+        ...queriesTypeAnswerQuiz
     },
     Mutation: {
         ...mutationsTypeUser
