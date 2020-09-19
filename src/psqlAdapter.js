@@ -6,7 +6,7 @@ const connStr =
     port: 5432,
     database: 'capacita_tech',
     user: 'postgres',
-    password: 'Capacit@Tech2020'
+    password: 'postgres'
 };
 
 const pgp = pgPromise({}); // Instancia a pgPromise
