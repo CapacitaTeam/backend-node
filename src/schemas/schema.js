@@ -3,8 +3,7 @@ import { resolvers } from '../resolvers/resolver';
 import { typeUser, queriesDefUser, mutationsDefUser } from './typeUser';
 import { typeCatalogue, queriesDefCatalogue } from './typeCatalogue';
 import { mutationsAuth } from './typeAuth';
-import { typeQuestionQuiz, queriesDefQuestionQuiz } from './typeQuestionQuiz';
-import { typeAnswerQuiz, queriesDefAnswerQuiz } from './typeAnswerQuiz';
+import { typeQuestionQuiz, queriesDefQuestionQuiz, mutationsDefQuestionQuiz } from './typeQuestionQuiz';
 
 // Definición de type
 const typeDefs = `
@@ -12,17 +11,16 @@ const typeDefs = `
     ${queriesDefCatalogue}
     ${queriesDefUser}    
     ${queriesDefQuestionQuiz}
-    ${queriesDefAnswerQuiz}
   }
   type Mutation {
     ${mutationsDefUser}
     ${mutationsAuth}
+    ${mutationsDefQuestionQuiz}
   }
 
   ${typeCatalogue}  
   ${typeUser}
   ${typeQuestionQuiz}
-  ${typeAnswerQuiz}
 `;
 
 export default makeExecutableSchema({
