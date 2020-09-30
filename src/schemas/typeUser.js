@@ -4,6 +4,8 @@ const typeUser = `type User {
     lastname: String!    
     username: String!
     password: String!
+    status: Boolean!
+    createdat: String
     token: String
   }`
 
@@ -12,8 +14,8 @@ const queriesDefUser = `
   `;
 
 const mutationsDefUser = `
-  updateUser(id: Int!, firstname: String!, lastname: String!, username: String!, password: String!): User
-  createUser(id: Int, firstname: String!, lastname: String!, username: String!, password: String!): User
+  updateUser(id: Int!, firstname: String!, lastname: String!, username: String!, password: String!, status: Boolean!): User
+  createUser(id: Int, firstname: String!, lastname: String!, username: String!, password: String!, status: Boolean!): User
 `;
 
 module.exports = {

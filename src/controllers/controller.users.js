@@ -3,7 +3,7 @@ import { psql } from '../psqlAdapter';
 const userFunctions = {
 
     getAllUsers: () => {
-        const usersData = 'select id, firstname, lastname, username, password from public.user';
+        const usersData = 'select id, firstname, lastname, username, password, status, createdat from public.user';
         return psql.manyOrNone(usersData);
     },
     createUser: async (params) => {
