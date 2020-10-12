@@ -10,11 +10,12 @@ const userFunctions = {
         try {
             const { username, firstname, lastname, password, status } = params;
 
-            const query_insert = `INSERT INTO public.user (firstname, lastname, username, password, status) VALUES('${firstname}', '${lastname}','${username}', crypt('${password}',gen_salt('bf')), '${status}')`;
-            const resultado = await psql.any(query_insert)
+            const query_insert = `INSERT INTO public.user (firstname, lastname, username, password, status) VALUES('${firstname}', '${lastname}','${username}', crypt('${password}',gen_salt('bf')), '${status}') RETURNING *`;
+            const resultado = await psql.query(query_insert)
+
                 .then((result) => {
-                    console.log(params);
-                    return params;
+                    //console.log(result[0]);
+                    return result[0];
                 })
                 .catch((err) => {
                     console.log(err)
