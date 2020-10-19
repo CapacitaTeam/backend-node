@@ -1,10 +1,14 @@
 import { psql } from '../psqlAdapter';
 
 const userFunctions = {
-
+    getUser: (params) => {
+        const { id } = params;        
+        const userData = `select id, firstname, lastname, username, password, status, TO_CHAR(createdat, 'DD/MM/YYYY') AS createdat  from public.user WHERE id = ${id}`;
+        return psql.query(userData);
+    },
     getAllUsers: () => {
         const usersData = "select id, firstname, lastname, username, password, status, TO_CHAR(createdat, 'DD/MM/YYYY') AS createdat  from public.user";
-        return psql.manyOrNone(usersData);
+        return psql.manyOrNone(usersData);     
     },
     createUser: async (params) => {
         try {
@@ -33,11 +37,11 @@ const userFunctions = {
         try {
             const { id, username, firstname, lastname, password, status } = params;
 
-            const updateUser = `UPDATE public.user SET firstname = '${firstname}', lastname = '${lastname}', username = '${username}', password = crypt('${password}',gen_salt('bf')), status = '${status}' WHERE id = ${id}`;
+            const updateUser = `UPDATE public.user SET firstname = '${firstname}', lastname = '${lastname}', status = '${status}' WHERE id = ${id} RETURNING *`;
             const resultado = await psql.query(updateUser)
 
                 .then((result) => {
-                    return params;
+                    return result[0];
                 })
                 .catch((err) => {
                     console.log(err)
