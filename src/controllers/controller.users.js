@@ -14,7 +14,7 @@ const userFunctions = {
         try {
             const { username, firstname, lastname, password, status } = params;
 
-            const createUser = `INSERT INTO public.user (firstname, lastname, username, password, status) VALUES('${firstname}', '${lastname}','${username}', crypt('${password}',gen_salt('bf')), '${status}') RETURNING *`;
+            const createUser = `INSERT INTO public.user (firstname, lastname, username, password, status) VALUES('${firstname}', '${lastname}','${username}', crypt('${password}',gen_salt('bf')), '${status}') RETURNING id, firstname, lastname, username, password, status, TO_CHAR(createdat, 'DD/MM/YYYY') AS createdat`;
             const resultado = await psql.query(createUser)
 
                 .then((result) => {
@@ -37,8 +37,30 @@ const userFunctions = {
         try {
             const { id, username, firstname, lastname, password, status } = params;
 
-            const updateUser = `UPDATE public.user SET firstname = '${firstname}', lastname = '${lastname}', status = '${status}' WHERE id = ${id} RETURNING *`;
+            const updateUser = `UPDATE public.user SET firstname = '${firstname}', lastname = '${lastname}', status = '${status}' WHERE id = ${id} RETURNING id, firstname, lastname, username, password, status, TO_CHAR(createdat, 'DD/MM/YYYY') AS createdat`;
             const resultado = await psql.query(updateUser)
+
+                .then((result) => {
+                    return result[0];
+                })
+                .catch((err) => {
+                    console.log(err)
+                    return err;
+                });
+
+            return resultado;
+        }
+        catch (e) {
+            console.log(e)
+            return 'There was a problem registering your user' + e;
+        }
+    },
+    updateStatusUser: async (params) => {
+        try {
+            const { id, status } = params;
+
+            const updateStatusUser = `UPDATE public.user SET status = '${status}' WHERE id = ${id} RETURNING *`;
+            const resultado = await psql.query(updateStatusUser)
 
                 .then((result) => {
                     return result[0];

@@ -14,10 +14,11 @@ const queriesDefUser = `
     user(id: Int!): [User]
   `;
 
-const mutationsDefUser = `
-  updateUser(id: Int!, firstname: String!, lastname: String!, status: Boolean!): User
+const mutationsDefUser = `  
   createUser(id: Int, firstname: String!, lastname: String!, username: String!, password: String!, status: Boolean!): User
-`;
+  updateUser(id: Int!, firstname: String!, lastname: String!, status: Boolean!): User
+  updateStatusUser(id: Int!, status: Boolean!): User
+  `;
 
 module.exports = {
   typeUser,
