@@ -1,20 +1,35 @@
 import { psql } from '../psqlAdapter';
 
+const generatePasswordRand  = e => {
+    var characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    var length = 7;    
+    var pass = "";
+    for (var i=0; i < length; i++){
+        pass += characters.charAt(Math.floor(Math.random()*characters.length));   
+    }
+    return pass;
+}
+
 const userFunctions = {
     getUser: (params) => {
         const { id } = params;        
-        const userData = `select id, firstname, lastname, username, password, status, TO_CHAR(createdat, 'DD/MM/YYYY') AS createdat  from public.user WHERE id = ${id}`;
+        const userData = `select id, firstname, lastname, username, password, status, TO_CHAR(createdat, 'DD/MM/YYYY') AS createdat, id_role  from public.user WHERE id = ${id}`;
         return psql.query(userData);
     },
     getAllUsers: () => {
-        const usersData = "select id, firstname, lastname, username, password, status, TO_CHAR(createdat, 'DD/MM/YYYY') AS createdat  from public.user";
+        const usersData = "select id, firstname, lastname, username, password, status, TO_CHAR(createdat, 'DD/MM/YYYY') AS createdat, id_role  from public.user";
         return psql.manyOrNone(usersData);     
     },
     createUser: async (params) => {
         try {
-            const { username, firstname, lastname, password, status } = params;
+            var pass = "";
+            const { username, firstname, lastname, status, password, id_role } = params;
+            if(!password)
+                pass = generatePasswordRand();
+            else
+                pass = password
 
-            const createUser = `INSERT INTO public.user (firstname, lastname, username, password, status) VALUES('${firstname}', '${lastname}','${username}', crypt('${password}',gen_salt('bf')), '${status}') RETURNING id, firstname, lastname, username, password, status, TO_CHAR(createdat, 'DD/MM/YYYY') AS createdat`;
+            const createUser = `INSERT INTO public.user (firstname, lastname, username, password, status, id_role) VALUES('${firstname}', '${lastname}','${username}', crypt('${pass}',gen_salt('bf')), '${status}', '${id_role}') RETURNING id, firstname, lastname, username, password, status, TO_CHAR(createdat, 'DD/MM/YYYY') AS createdat`;
             const resultado = await psql.query(createUser)
 
                 .then((result) => {
@@ -35,7 +50,7 @@ const userFunctions = {
     },
     updateUser: async (params) => {
         try {
-            const { id, username, firstname, lastname, password, status } = params;
+            const { id, firstname, lastname, status } = params;
 
             const updateUser = `UPDATE public.user SET firstname = '${firstname}', lastname = '${lastname}', status = '${status}' WHERE id = ${id} RETURNING id, firstname, lastname, username, password, status, TO_CHAR(createdat, 'DD/MM/YYYY') AS createdat`;
             const resultado = await psql.query(updateUser)

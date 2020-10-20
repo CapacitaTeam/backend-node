@@ -5,6 +5,7 @@ const typeUser = `type User {
     username: String
     password: String
     status: Boolean
+    id_role:Int
     createdat: String
     token: String
   }`
@@ -15,7 +16,7 @@ const queriesDefUser = `
   `;
 
 const mutationsDefUser = `  
-  createUser(id: Int, firstname: String!, lastname: String!, username: String!, password: String!, status: Boolean!): User
+  createUser(id: Int, firstname: String!, lastname: String!, username: String!, password: String, status: Boolean!, id_role:Int!): User
   updateUser(id: Int!, firstname: String!, lastname: String!, status: Boolean!): User
   updateStatusUser(id: Int!, status: Boolean!): User
   `;
