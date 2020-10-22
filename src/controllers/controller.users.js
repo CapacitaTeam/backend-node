@@ -29,6 +29,8 @@ const userFunctions = {
             else
                 pass = password
 
+            //console.log(pass);
+            //return;
             const createUser = `INSERT INTO public.user (firstname, lastname, username, password, status, id_role) VALUES('${firstname}', '${lastname}','${username}', crypt('${pass}',gen_salt('bf')), '${status}', '${id_role}') RETURNING id, firstname, lastname, username, password, status, TO_CHAR(createdat, 'DD/MM/YYYY') AS createdat`;
             const resultado = await psql.query(createUser)
 
