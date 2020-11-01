@@ -9,24 +9,28 @@ const app = express();
 
 // Middleware para verificar token
 const verifyToken = async (req, res, next) => {
-    const token = req.headers['x-access-token'];
-    console.log(req.headers);
-    if (!req.headers.authorization) {
-        return res.status(401).send({ auth: false, message: 'No token provided' });
+    //const token = req.headers['x-access-token'];
+    
+    if (req.headers.authorization) {
+        console.log('auth..... ' + req.headers.authorization)
+        console.log(req.headers.authorization);
+        if (!req.headers.authorization) {
+            return res.status(401).send({ auth: false, message: 'No token provided' });
+        }
+        // Decodifica el token
+        const decoded = await jwt.verify(req.headers.authorization, config.secret);
+        //Asigna el id del usuario logueado
+        req.id = decoded.id;
+        console.log('decoded id > ' + decoded.id);
+        console.log('decoded >' + JSON.stringify(decoded));                
     }
-    // Decodifica el token
-    const decoded = await jwt.verify(req.headers.authorization, config.secret);
-    //Asigna el id del usuario logueado
-    req.id = decoded.id;
-    console.log(decoded);
-    ///console.log(req);
     next();
 }
 
 app.use('*', cors());
 
 //Para utilizar el middleware token quitar comentario
-//app.use(verifyToken);
+app.use(verifyToken);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
