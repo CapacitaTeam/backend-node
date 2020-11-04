@@ -2,17 +2,11 @@ import pgPromise from 'pg-promise';
 
 const connStr = 
 {
-    // host: 'localhost', // server name or IP address;
-    // port: 5432,
-    // database: 'capacita_tech',
-    // user: 'postgres',
-    // password: 'Capacit@Tech2020'
-
-    host: 'ct-db.capacita.tech', // server name or IP address;
-    port: 5432,
-    database: 'template03',
-    user: 'web_team',
-    password: 'w3b_t3@m_2k20'
+    host: process.env.host,//'ct-db.capacita.tech', // server name or IP address;
+    port: process.env.port,
+    database: process.env.database,
+    user: process.env.user,
+    password: process.env.password
 };
 
 const pgp = pgPromise({}); // Instancia a pgPromise
